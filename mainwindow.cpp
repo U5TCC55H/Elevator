@@ -64,7 +64,7 @@ void MainWindow::initDraw() {
                              ui->graphicsView->geometry().width() / 8.0,
                              floorHeight);
     elevatorText = scene.addText("0", QFont("Arial", 20));
-    elevatorText->setX(ui->graphicsView->geometry().width() / 8.0 * 0.5);
+    elevatorText->setX(ui->graphicsView->geometry().width() / 8.0 * 0.6);
     elevatorText->setY(floorHeight * sim->getElevatorPosition() +
                        floorHeight * 0.5);
     elevatorText->setRotation(180);
