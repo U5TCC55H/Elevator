@@ -159,6 +159,7 @@ void Elevator::toSIdle() {
 
 void Elevator::toSLoading() {
     timer = 0;
+    buttonUpPressed[currentFloor] = buttonDownPressed[currentFloor] = false;
     state = SLoading;
 }
 
@@ -207,9 +208,6 @@ void Elevator::pressButton(int src, Elevator::Button b) {
 void Elevator::loadPerson(Person *p) {
     pl[p->dst].append(p);
     timer = 0;
-    buttonDownPressed[currentFloor] =
-            buttonUpPressed[currentFloor] =
-            false;
 }
 
 Person * Elevator::unloadPerson() {

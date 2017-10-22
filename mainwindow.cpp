@@ -54,20 +54,26 @@ void MainWindow::initDraw() {
                       floorHeight * i,
                       ui->graphicsView->geometry().width(),
                       ui->graphicsView->geometry().height() / 50.0);
-        floors[i] = scene.addText("0");
+        floors[i] = scene.addText("0", QFont("Arial", 20));
         floors[i]->setX(ui->graphicsView->geometry().width() * 0.618);
-        floors[i]->setY(floorHeight * i + floorHeight * 0.3);
+        floors[i]->setY(floorHeight * i + floorHeight * 0.5);
         floors[i]->setRotation(180);
     }
     elevator = scene.addRect(0,
                              floorHeight * sim->getElevatorPosition(),
                              ui->graphicsView->geometry().width() / 8.0,
                              floorHeight);
-    elevatorText = scene.addText("0");
+    elevatorText = scene.addText("0", QFont("Arial", 20));
     elevatorText->setX(ui->graphicsView->geometry().width() / 8.0 * 0.5);
     elevatorText->setY(floorHeight * sim->getElevatorPosition() +
                        floorHeight * 0.5);
     elevatorText->setRotation(180);
+
+    ui->lineEdit->setText(QString::number(sim->getNumQueued()));
+    ui->lineEdit_2->setText(QString::number(sim->getNumQueuing()));
+    ui->lineEdit_3->setText(QString::number(sim->getNumServed()));
+    ui->lineEdit_4->setText(QString::number(sim->getNumResigned()));
+    ui->lineEdit_5->setText("N/A");
 }
 
 void MainWindow::reDraw() {
@@ -81,5 +87,10 @@ void MainWindow::reDraw() {
     for (int i = 0; i < Config::NumFloors; ++i) {
         floors[i]->setPlainText(QString::number(sim->getNumPerson(i)));
     }
+    ui->lineEdit->setText(QString::number(sim->getNumQueued()));
+    ui->lineEdit_2->setText(QString::number(sim->getNumQueuing()));
+    ui->lineEdit_3->setText(QString::number(sim->getNumServed()));
+    ui->lineEdit_4->setText(QString::number(sim->getNumResigned()));
+    ui->lineEdit_5->setText(QString::number(sim->getAvgWaitTime()));
     scene.update();
 }

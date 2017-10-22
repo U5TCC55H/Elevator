@@ -11,9 +11,9 @@ Logger::Logger() :
 }
 
 Logger & Logger::operator<<(const Person &p) {
-    ++numQueued;
     switch (p.state) {
     case Person::Queuing:
+        ++numQueued;
         ++numQueuing;
         break;
     case Person::Resigning:
@@ -21,11 +21,11 @@ Logger & Logger::operator<<(const Person &p) {
         ++numResigned;
         break;
     case Person::Moving:
+        ++numServed;
         --numQueuing;
         totalWaitingTime += p.endTime - p.time;
         break;
     case Person::Leaving:
-        ++numServed;
         break;
     }
     return *this;

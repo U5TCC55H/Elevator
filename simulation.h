@@ -28,6 +28,21 @@ public:
         return e.getNumPerson();
     }
     void setSpeed(int s);
+    int getNumQueued() {
+        return logger.numQueued;
+    }
+    int getNumServed() {
+        return logger.numServed;
+    }
+    int getNumQueuing() {
+        return logger.numQueuing;
+    }
+    int getNumResigned() {
+        return logger.numResigned;
+    }
+    float getAvgWaitTime() {
+        return logger.totalWaitingTime / logger.numServed * Config::timeGranu;
+    }
 public slots:
     void start();
     void pause();
