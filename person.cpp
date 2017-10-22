@@ -1,13 +1,12 @@
 #include "person.h"
 
-Person::Person() : next(nullptr)
-{
-
-}
-
-Person::Person(int src, int dst, Person *next) :
+Person::Person(int time, int src, int dst, int patience,
+               Person *prev, Person *next) :
+    time(time),
     src(src),
     dst(dst),
+    patience(patience),
+    prev(prev),
     next(next) {
 
 }

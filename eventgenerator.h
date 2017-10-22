@@ -24,10 +24,14 @@ public:
     int getSrc() {
         return src;
     }
+    int getPatience() {
+        return patience;
+    }
 private:
     int type;
     int dst;
     int src;
+    int patience;
 };
 
 #endif // EVENTGENERATOR_H

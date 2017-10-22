@@ -5,16 +5,18 @@
 class Person
 {
 public:
-    Person();
-    Person(int src, int dst, Person *next = nullptr);
+    Person(int time, int src, int dst, int pacience,
+           Person *prev = nullptr, Person *next = nullptr);
     ~Person();
 
     int getIntension() {
         return dst > src? 1: -1;
     }
+    int time;
     int src;
     int dst;
-    Person *next;
+    int patience;
+    Person *prev, *next;
 };
 
 #endif // PERSON_H

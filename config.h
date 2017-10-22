@@ -7,6 +7,10 @@ const float Pressure = 0.02;
 const float timeGranu = 0.1;
 const int RedrawFreq = 24;
 
+// 人（的）参（数）
+const int minPacience = 600;
+const int maxPacience = 1800;
+
 // 电梯的参数
 const int idleTime = 300;
 const int loadingTime = 25;

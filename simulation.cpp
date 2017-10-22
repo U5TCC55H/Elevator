@@ -1,7 +1,8 @@
 #include "simulation.h"
 
 Simulation::Simulation() :
-    simulating(false)
+    simulating(false),
+    time(0)
 {
     t.setInterval(Config::timeGranu * 1000);
     QObject::connect(&t, SIGNAL(timeout()),
@@ -27,11 +28,12 @@ void Simulation::switchState() {
 }
 
 void Simulation::onTimeout() {
+    ++time;
     t.start();
     eg.generate();
     switch(eg.getType()) {
     case EventGenerator::NewPerson: {
-        Person *p = new Person(eg.getSrc(), eg.getDst());
+        Person *p = new Person(time, eg.getSrc(), eg.getDst(), eg.getPatience());
         if (pl[p->src].isEmpty())
             e.pressButton(p->src, p->dst > p->src?
                               Elevator::ButtonUp :
@@ -55,6 +57,17 @@ void Simulation::onTimeout() {
                               p->dst > p->src?
                                   Elevator::ButtonUp :
                                   Elevator::ButtonDown);
+            }
+        }
+    }
+    // 等不住的人要离开啦
+    for (PersonList &l : pl) {
+        Person *p = l.getHead();
+        while (p) {
+            auto tmp = p;
+            p = p->next;
+            if (time - tmp->time > tmp->patience) {
+                l.remove(tmp);
             }
         }
     }

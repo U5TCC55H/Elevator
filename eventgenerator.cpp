@@ -12,6 +12,7 @@ void EventGenerator::generate() {
         do {
             dst = rand() % Config::NumFloors;
         } while (src == dst);
+        patience = Config::minPacience + rand() % (Config::maxPacience - Config::minPacience + 1);
     } else {
         type = None;
     }

@@ -18,7 +18,10 @@ public:
                 tail = &head;
             Person *p = head.next;
             head.next = head.next->next;
-            p->next = nullptr;
+            if (head.next) {
+                head.next->prev = &head;
+            }
+            p->prev = p->next = nullptr;
             return p;
         }
         else {
@@ -31,9 +34,24 @@ public:
     Person * getHead() {
         return head.next;
     }
+    void remove(Person *p) {
+        --length;
+        if (tail == p) {
+            if (!p->next)
+                tail = p->prev;
+            else
+                tail = p->next;
+        }
+        p->prev->next = p->next;
+        if (p->next) {
+            p->next->prev = p->prev;
+        }
+        p->next = p->prev = nullptr;
+        delete p;
+    }
 private:
-    Person head, *tail;
     int length;
+    Person head, *tail;
 };
 
 #endif // PERSONLIST_H

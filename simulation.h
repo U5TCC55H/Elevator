@@ -40,6 +40,7 @@ private:
     EventGenerator eg;
     Logger l;
     bool simulating;
+    int time;
 };
 
 #endif // SIMULATION_H
