@@ -34,6 +34,7 @@ void Simulation::onTimeout() {
     switch(eg.getType()) {
     case EventGenerator::NewPerson: {
         Person *p = new Person(time, eg.getSrc(), eg.getDst(), eg.getPatience());
+        logger << *p;
         if (pl[p->src].isEmpty())
             e.pressButton(p->src, p->dst > p->src?
                               Elevator::ButtonUp :
@@ -46,10 +47,17 @@ void Simulation::onTimeout() {
     }
     e.act();
     if (e.isReadyToUnload()) {
-        delete e.unloadPerson();
+        Person *p = e.unloadPerson();
+        p->state = Person::Leaving;
+        p->endTime = time;
+        logger << *p;
+        delete p;
     } else if (e.isReadyToLoad() && !pl[e.getCurrentFloor()].isEmpty()) {
         Person *p = pl[e.getCurrentFloor()].getHead();
         if (e.getIntension() == 0 || e.getIntension() == p->getIntension()) {
+            p->state = Person::Moving;
+            p->endTime = time;
+            logger << *p;
             e.loadPerson(pl[e.getCurrentFloor()].pop_head()); // 人上电梯
             if (!pl[e.getCurrentFloor()].isEmpty()) {
                 p = pl[e.getCurrentFloor()].getHead();
@@ -67,6 +75,9 @@ void Simulation::onTimeout() {
             auto tmp = p;
             p = p->next;
             if (time - tmp->time > tmp->patience) {
+                tmp->state = Person::Resigning;
+                logger << *tmp;
+                tmp->endTime = time;
                 l.remove(tmp);
             }
         }

@@ -12,10 +12,18 @@ public:
     int getIntension() {
         return dst > src? 1: -1;
     }
+    typedef enum {
+        Queuing,
+        Resigning,
+        Moving,
+        Leaving
+    } State;
     int time;
     int src;
     int dst;
     int patience;
+    State state;
+    int endTime;
     Person *prev, *next;
 };
 

@@ -1,11 +1,32 @@
 #include "logger.h"
 
-Logger::Logger()
+Logger::Logger() :
+    numQueued(0),
+    numServed(0),
+    numQueuing(0),
+    numResigned(0),
+    totalWaitingTime(0)
 {
 
 }
 
-Logger & operator<<(Logger &l, const char *s) {
-    std::cout << s << std::endl;
-    return l;
+Logger & Logger::operator<<(const Person &p) {
+    ++numQueued;
+    switch (p.state) {
+    case Person::Queuing:
+        ++numQueuing;
+        break;
+    case Person::Resigning:
+        --numQueuing;
+        ++numResigned;
+        break;
+    case Person::Moving:
+        --numQueuing;
+        totalWaitingTime += p.endTime - p.time;
+        break;
+    case Person::Leaving:
+        ++numServed;
+        break;
+    }
+    return *this;
 }

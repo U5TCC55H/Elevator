@@ -38,7 +38,7 @@ private:
     Elevator e;
     QTimer t;
     EventGenerator eg;
-    Logger l;
+    Logger logger; // 负责记录数据
     bool simulating;
     int time;
 };
