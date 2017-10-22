@@ -7,5 +7,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
+    Simulation s;
+    w.setSimulation(s);
+
     return a.exec();
 }
