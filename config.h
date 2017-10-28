@@ -11,7 +11,7 @@ const int RedrawFreq = 24;
 const int minPacience = 600;
 const int maxPacience = 1800;
 
-// 电梯的参数
+// 电梯  参
 const int idleTime = 300;
 const int loadingTime = 25;
 const int unloadingTime = 25;

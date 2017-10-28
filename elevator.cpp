@@ -1,4 +1,6 @@
 #include "elevator.h"
+#include <iostream>
+using namespace std;
 
 Elevator::Elevator() :
     currentFloor(1),
@@ -155,6 +157,7 @@ void Elevator::fromSMovingDown() {
 void Elevator::toSIdle() {
     timer = 0;
     state = SIdle;
+    cout << "Elevator idling" << endl;
 }
 
 void Elevator::toSLoading() {
@@ -181,11 +184,13 @@ void Elevator::toSClosing() {
 void Elevator::toSMovingUp() {
     timer = 0;
     state = SMovingUp;
+    cout << "Elevator moving up" << endl;
 }
 
 void Elevator::toSMovingDown() {
     timer = 0;
     state = SMovingDown;
+    cout << "Elevator moving down" << endl;
 }
 
 int Elevator::getCurrentFloor() {

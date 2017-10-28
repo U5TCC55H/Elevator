@@ -1,4 +1,6 @@
 #include "simulation.h"
+#include <iostream>
+using namespace std;
 
 Simulation::Simulation() :
     simulating(false),
@@ -40,6 +42,7 @@ void Simulation::onTimeout() {
                               Elevator::ButtonUp :
                               Elevator::ButtonDown);
         pl[p->src].append(p); // 人在对应的楼层排队
+        cout << "New person, from " << p->src << " to " << p->dst << endl;
         break;
     }
     default:
@@ -50,6 +53,7 @@ void Simulation::onTimeout() {
         Person *p = e.unloadPerson();
         p->state = Person::Leaving;
         p->endTime = time;
+        cout << "Person(from " << p->src << " to " << p->dst << ") leaving" << endl;
         logger << *p;
         delete p;
     } else if (e.isReadyToLoad() && !pl[e.getCurrentFloor()].isEmpty()) {
@@ -58,6 +62,7 @@ void Simulation::onTimeout() {
             p->state = Person::Moving;
             p->endTime = time;
             logger << *p;
+            cout << "Person(from " << p->src << " to " << p->dst << ") moving" << endl;
             e.loadPerson(pl[e.getCurrentFloor()].pop_head()); // 人上电梯
             if (!pl[e.getCurrentFloor()].isEmpty()) {
                 p = pl[e.getCurrentFloor()].getHead();
@@ -78,6 +83,7 @@ void Simulation::onTimeout() {
                 tmp->state = Person::Resigning;
                 logger << *tmp;
                 tmp->endTime = time;
+                cout << "Person(from " << tmp->src << " to " << tmp->dst << ") gave up" << endl;
                 l.remove(tmp);
             }
         }
